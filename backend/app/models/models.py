@@ -3,7 +3,8 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 import datetime
 
-DATABASE_URL = "sqlite:///./documents.db"
+# Use ONE consistent database file for your project
+DATABASE_URL = "sqlite:///./app.db"  # Or "sqlite:///./documents.db" (pick one and use everywhere)
 
 engine = create_engine(DATABASE_URL, connect_args={"check_same_thread": False})
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
@@ -17,5 +18,5 @@ class Document(Base):
     upload_time = Column(DateTime, default=datetime.datetime.utcnow)
     extracted_text = Column(Text)
 
-# Create the table
+# Create the table (only if it doesn't exist)
 Base.metadata.create_all(bind=engine)
