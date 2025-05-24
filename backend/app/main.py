@@ -35,6 +35,36 @@ from typing import Optional, List
 from fastapi import Body, Depends
 
 
+
+
+
+embedder = None
+
+def get_embedder():
+    global embedder
+    if embedder is None:
+        from sentence_transformers import SentenceTransformer
+        embedder = SentenceTransformer("all-MiniLM-L6-v2")
+    return embedder
+
+# For ChromaDB
+chroma_client = None
+collection = None
+
+def get_collection():
+    global chroma_client, collection
+    if chroma_client is None or collection is None:
+        import chromadb
+        from chromadb.config import Settings
+        chroma_client = chromadb.Client(Settings(persist_directory="./chroma_db"))
+        collection = chroma_client.get_or_create_collection("documents")
+    return collection
+
+
+
+
+
+
 load_dotenv()  # This loads variables from .env
 
 
@@ -54,8 +84,25 @@ import google.generativeai as genai
 genai.configure(api_key=GOOGLE_API_KEY)
 
 
-nltk.download('vader_lexicon')
-sia = SentimentIntensityAnalyzer()
+
+
+
+
+sia = None
+
+def get_sentiment_analyzer():
+    global sia
+    if sia is None:
+        import nltk
+        from nltk.sentiment import SentimentIntensityAnalyzer
+        nltk.download('vader_lexicon')
+        sia = SentimentIntensityAnalyzer()
+    return sia
+
+
+
+
+
 
 Base.metadata.create_all(bind=engine)
 
@@ -100,9 +147,35 @@ BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 UPLOAD_DIR = os.path.normpath(os.path.join(BASE_DIR, '../../data/uploaded_files'))
 os.makedirs(UPLOAD_DIR, exist_ok=True)
 
-embedder = SentenceTransformer("all-MiniLM-L6-v2")
-chroma_client = chromadb.Client(Settings(persist_directory="./chroma_db"))
-collection = chroma_client.get_or_create_collection("documents")
+
+
+embedder = None
+
+def get_embedder():
+    global embedder
+    if embedder is None:
+        from sentence_transformers import SentenceTransformer
+        embedder = SentenceTransformer("all-MiniLM-L6-v2")
+    return embedder
+
+
+
+chroma_client = None
+collection = None
+
+def get_collection():
+    global chroma_client, collection
+    if chroma_client is None:
+        import chromadb
+        from chromadb.config import Settings
+        chroma_client = chromadb.Client(Settings(persist_directory="./chroma_db"))
+        collection = chroma_client.get_or_create_collection("documents")
+    return collection
+
+
+
+
+
 
 app = FastAPI()
 
@@ -179,22 +252,31 @@ def paragraph_chunk(text):
     paras = [p.strip() for p in text.split('\n\n') if p.strip()]
     return paras
 
+
+
+
+
+
+# --- Document Processing ---
 def add_document_to_vector_db(doc_id, text):
-    paras = paragraph_chunk(text)
+    paras = paragraph_chunk(text)  # Assuming this splits your text into paragraphs
+    embedder = get_embedder()      # Lazy-loads the model
     embeddings = embedder.encode(paras)
     ids = [f"{doc_id}_para_{i}" for i in range(len(paras))]
     metadatas = [{
-    "doc_id": doc_id,
-    "chunk_index": i,
-    "chunk_type": "paragraph"
-} for i in range(len(paras))]
+        "doc_id": doc_id,
+        "chunk_index": i,
+        "chunk_type": "paragraph"
+    } for i in range(len(paras))]
 
+    collection = get_collection()  # Lazy-loads the collection
     collection.add(
         documents=paras,
         embeddings=embeddings,
         ids=ids,
         metadatas=metadatas,
     )
+
 
 
 
@@ -241,7 +323,8 @@ async def upload_files(files: List[UploadFile] = File(...), db: Session = Depend
             })
             continue
 
-        sentiment_scores = sia.polarity_scores(extracted_text)
+        sentiment_scores = get_sentiment_analyzer().polarity_scores(extracted_text)
+
 
         doc = Document(
             filename=file.filename,
