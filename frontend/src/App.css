@@ -1,3 +1,4 @@
+/* General styles for the app */
 :root {
   --background: #f5f0e6;
   --foreground: #333333;
@@ -9,6 +10,9 @@
   --sidebar-border: #e0d6c3;
   --card-bg: #fff;
 }
+
+
+
 
 [data-theme="dark"] {
   --background: #191817;
@@ -22,6 +26,9 @@
   --card-bg: #181818;
 }
 
+
+
+
 body {
   background: var(--background);
   color: var(--foreground);
@@ -31,10 +38,16 @@ body {
   transition: background 0.3s, color 0.3s;
 }
 
+
+
+
 .app-root {
   display: flex;
   height: 100vh;
 }
+
+
+
 
 .sidebar {
   width: 260px;
@@ -47,16 +60,23 @@ body {
   position: relative;
 }
 
+
+
 .sidebar-documents {
   flex: 1;
   overflow-y: auto;
 }
+
+
 
 .sidebar-documents ul {
   list-style: none;
   padding: 0;
   margin: 0;
 }
+
+
+
 
 .sidebar-documents li {
   margin-bottom: 14px;
@@ -69,6 +89,9 @@ body {
   justify-content: space-between;
 }
 
+
+
+
 .doc-name {
   display: flex;
   align-items: center;
@@ -78,12 +101,18 @@ body {
   overflow: hidden;
 }
 
+
+
+
 .doc-name b {
   margin-left: 4px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
+
+
+
 
 .doc-actions button {
   background: none;
@@ -95,9 +124,15 @@ body {
   transition: color 0.2s;
 }
 
+
+
+
 .doc-actions button:hover {
   color: var(--button-hover);
 }
+
+
+
 
 .floating-upload-btn {
   position: fixed;
@@ -119,6 +154,9 @@ body {
   transition: background 0.2s;
 }
 
+
+
+
 .floating-upload-btn:hover {
   background: var(--button-hover);
 }
@@ -136,6 +174,9 @@ body {
   animation: fade-in 0.3s;
 }
 
+
+
+
 @keyframes fade-in {
   from { opacity: 0; transform: translateY(20px);}
   to { opacity: 1; transform: translateY(0);}
@@ -148,6 +189,9 @@ body {
   border-radius: 8px;
   box-shadow: 0 2px 8px #ccc;
 }
+
+
+
 
 .upload-progress-bar {
   width: 100%;
@@ -170,7 +214,7 @@ body {
   flex-direction: column;
   position: relative;
   background: var(--background);
-  padding: 0 0 80px 0; /* reserve space for input */
+  padding: 0 0 80px 0;
 }
 
 .sheep-header {
@@ -193,10 +237,17 @@ body {
   letter-spacing: 0.5px;
 }
 
+
+
+
+
 @keyframes sheep-bounce {
   0% { transform: translateY(0);}
   100% { transform: translateY(-10px);}
 }
+
+
+
 
 .chat-area {
   flex: 1;
@@ -207,10 +258,13 @@ body {
   gap: 18px;
 }
 
+
+
+
 .chat-bubbles {
   display: flex;
   flex-direction: column;
-  gap: 20px; /* More space between all messages */
+  gap: 20px;
   padding-bottom: 16px;
 }
 
@@ -223,11 +277,12 @@ body {
   box-shadow: 0 2px 8px rgba(198,134,66,0.08);
   display: inline-block;
   position: relative;
-  margin-bottom: 8px; /* Extra space below each bubble */
-  line-height: 1.7;   /* More space between lines inside the bubble */
+  margin-bottom: 8px;
+  line-height: 1.7;
 }
 
-/* Sheep Bot messages on the left */
+
+
 .chat-bubble.bot {
   align-self: flex-start;
   background: var(--accent);
@@ -237,7 +292,9 @@ body {
   margin-right: auto;
 }
 
-/* User messages on the right */
+
+
+
 .chat-bubble.user {
   align-self: flex-end;
   background: #e2eafc;
@@ -302,6 +359,9 @@ body {
   color: var(--foreground);
 }
 
+
+
+
 .sheep-header {
   text-align: center;
   font-size: 2.3rem;
@@ -314,7 +374,6 @@ body {
   align-items: center;
   justify-content: center;
   gap: 0.12em;
-  /* No bounce, no float */
   animation: none;
   text-shadow: none;
 }
@@ -325,6 +384,10 @@ body {
   margin: 0 0.07em;
 }
 
+
+
+
+/* Sheep header */
 .tagline {
   text-align: center;
   font-size: 1.1rem;
