@@ -1,76 +1,101 @@
 🐑 Sheep Bot
 
-Sheep Bot is a friendly, sheep-themed chatbot that helps users interact with and explore documents like PDFs in a conversational, intuitive way. Designed for students, educators, and professionals, Sheep Bot makes document research, theme discovery, and semantic search accessible and fun.
+Sheep Bot is a friendly, sheep-themed chatbot that helps users interact with and explore documents like PDFs in a conversational, intuitive way. Designed for students, educators, and professionals, Sheep Bot makes document research, theme discovery, and semantic search both accessible and fun.
+
+⸻
+
 🌐 Live Demo & API
-Web App: https://wasserstoff-aiinterntask.vercel.app/
-API Docs (Swagger): https://mahindra-bot.biup.ai/docs#/
+	•	🔗 Live Website: Sheep Bot Web App
+	•	⚙️ API Docs (Swagger): Sheep Bot API
+
+⸻
+
 ✨ Features
-Document Upload: Add and manage your files through a simple sidebar.
-Conversational Q&A: Ask natural language questions about your documents.
-Semantic Search: Find relevant document sections using AI-powered embeddings.
-Theme Identification: Discover main topics in your files via clustering.
-Chat-Style UI: Enjoy a playful, sheep-themed chat interface with light/dark mode.
-File Previews: Quickly view and select documents for analysis.
-Robust Error Handling: Get clear feedback for unsupported files or system issues.
+	•	📁 Document Upload – Add and manage your files through a simple sidebar.
+	•	💬 Conversational Q&A – Ask natural language questions about your documents.
+	•	🧠 Semantic Search – Find relevant document sections using AI-powered embeddings.
+	•	📌 Theme Identification – Discover main topics in your files using clustering.
+	•	💻 Chat-Style UI – Enjoy a sheep-themed interface with light/dark mode support.
+	•	🖼️ File Previews – Quickly view and select documents for analysis.
+	•	🛡️ Robust Error Handling – Get clear messages for unsupported files or system issues.
+
+⸻
+
 🏗️ System Architecture
-Frontend:
-Sheep-themed chat interface for uploads and Q&A.
-Sidebar for file management and previews.
-Backend (FastAPI):
-Handles user requests and document operations.
-Exposes RESTful endpoints for document management and chat.
-Document Processor:
-Chunking: Splits documents into smaller parts (e.g., paragraphs).
-Embedding: Uses Sentence Transformers to turn text into semantic vectors.
-Vector Database (ChromaDB):
-Stores embeddings for fast, similarity-based search.
-Clustering (KMeans):
-Groups similar content to help users see document themes.
+	•	Frontend
+Chat interface with a sidebar for uploads and previews, built using modern JavaScript frameworks (React/Next.js or similar).
+	•	Backend (FastAPI)
+Handles requests, document operations, and RESTful API endpoints.
+	•	Document Processor
+	•	Chunking: Splits files into smaller parts (like paragraphs).
+	•	Embedding: Converts chunks to semantic vectors using Sentence Transformers.
+	•	Vector Database (ChromaDB)
+Stores embeddings for fast semantic search.
+	•	Clustering (KMeans)
+Groups similar content to identify themes in documents.
+
+⸻
+
 🧠 Methodologies
-Document Chunking:
-Files are split into smaller sections for precise analysis.
-Semantic Embedding:
-Each chunk is converted into a vector using Sentence Transformers, capturing its meaning.
-Semantic Search:
-User queries are embedded and compared to document vectors to find the most relevant content.
-Clustering:
-KMeans groups similar chunks to reveal key topics and themes.
-Citation Support:
-Each answer identifies the relevant chunk or section, helping users trace information (but does not provide direct clickable links).
+	1.	Document Chunking – Files are split into manageable sections.
+	2.	Semantic Embedding – Chunks are turned into meaningful vectors via Sentence Transformers.
+	3.	Semantic Search – User queries are compared with vectors to retrieve relevant text.
+	4.	Clustering – KMeans algorithm groups similar chunks to highlight key topics.
+	5.	Citation Support – Each result is traced back to its original section (not clickable).
+
+⸻
+
 🛠️ Technologies Used
-FastAPI: For backend API development.
-Sentence Transformers: For semantic text embeddings.
-ChromaDB: For storing and searching embeddings.
-scikit-learn: For clustering (KMeans).
-Frontend: Modern JavaScript (React/Next.js or similar).
-Docker: For consistent deployment across environments.
+	•	⚙️ FastAPI – Backend API development.
+	•	🔍 Sentence Transformers – Semantic vector generation.
+	•	🧩 ChromaDB – Vector storage and semantic search.
+	•	📊 scikit-learn – Clustering with KMeans.
+	•	🌐 Frontend – React/Next.js (or similar).
+	•	🐳 Docker – Consistent deployment environment.
+
+⸻
+
 ⚙️ Deployment & Scalability
-Current Deployment:
-Web: Hosted on Vercel (see site)
-API: Hosted on a custom domain (see docs)
-Scalability:
-Modular architecture allows for horizontal scaling.
-Docker support enables easy migration to any cloud provider.
+	•	Current Deployment
+	•	✅ Website hosted on Vercel
+	•	✅ API hosted on a custom domain with external help (due to limitations with platforms listed in the project PDF)
+	•	Scalability
+	•	Modular design enables horizontal scaling.
+	•	Docker support allows easy migration to any modern cloud platform like Hugging Face Spaces, Render, or Railway.
+
+⸻
+
 💡 Design Choices & Challenges
-Modular Codebase:
-Separates concerns for easier scaling and maintenance.
-Resource Optimization:
-Uses lightweight models and efficient chunking for cloud compatibility.
-Error Handling:
-Provides user-friendly messages and robust backend logic.
-Fun, Accessible UI:
-Sheep personality, animations, and a welcoming chat experience.
-Deployment Flexibility:
-Not tied to any single provider; Docker-ready for future moves.
-📚 References
-FastAPI Docs
-ChromaDB Docs
-Sentence Transformers
-scikit-learn
+	•	🔄 Modular Codebase – Easier to manage, debug, and scale.
+	•	⚡ Resource Optimization – Lightweight models for cloud compatibility.
+	•	🧯 Error Handling – User-friendly backend and frontend messaging.
+	•	🎨 Fun UI – Light/dark mode, sheep animations, playful responses.
+	•	🚀 Flexible Deployment – Docker-ready, not tied to any single platform.
+
+⸻
+
 📝 Developer Notes
-Building Sheep Bot was a journey of learning and problem-solving—from integrating NLP and vector search to overcoming deployment hurdles. After trying several hosting options, the project was successfully launched with help from an external expert, ensuring reliable public access. This process strengthened my skills in full-stack AI applications and cloud deployment.
+
+Building Sheep Bot was a challenging but rewarding experience. From integrating NLP and vector search to connecting the frontend and backend, each step came with its own learning curve. The biggest hurdle was deployment, as many of the suggested platforms weren’t suitable for my use case. With the help of an employee from my sister’s company, I finally hosted the project on a custom domain, ensuring reliable public access. This process taught me a lot about full-stack development, API integration, and cloud deployment.
+
+⸻
+
 🎯 Conclusion
-Sheep Bot combines practical AI with a delightful user experience. Even with deployment and integration challenges, the project is now live, stable, and ready for real-world use. Sheep Bot stands as a testament to creative problem-solving and technical growth, making document research smarter and more enjoyable.
-Questions or feedback?
-Contact: [Your Name] — [your.email@example.com]
-Sheep Bot: Your woolly smart assistant for document exploration!
+
+Sheep Bot is more than just a chatbot — it’s a smart, interactive assistant that simplifies document research through AI. With features like semantic search, theme detection, and a creative UI, it brings both functionality and fun to users. Despite the initial deployment issues, the project is now live, stable, and production-ready. It’s a strong example of learning, growth, and creative problem-solving.
+
+⸻
+
+📚 References
+	•	FastAPI Documentation
+	•	ChromaDB Documentation
+	•	Sentence Transformers
+	•	scikit-learn Documentation
+
+⸻
+
+📬 Contact
+	•	Developer: Rohit Yadav
+	•	Email: rohityadav.0620@gmail.com
+	•	GitHub: @rohit-yadav5
+	•	Portfolio: rohit-yadav5.github.io
