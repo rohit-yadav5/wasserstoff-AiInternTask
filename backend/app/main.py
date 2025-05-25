@@ -691,9 +691,6 @@ def query_documents(
 
 
 
-# Health Check Endpoint
-app = FastAPI()
-
 @app.get("/")
 def read_root():
     return {"status": "ok"}
