@@ -12,6 +12,9 @@ from nltk.sentiment import SentimentIntensityAnalyzer
 from typing import List
 
 
+
+
+
 from sentence_transformers import SentenceTransformer
 import chromadb
 from chromadb.config import Settings
@@ -26,10 +29,15 @@ from app.core.database import SessionLocal, engine
 import chromadb
 from chromadb.config import Settings
 
-import os
+
+
 from dotenv import load_dotenv
 
+
+
 from typing import Optional
+
+
 
 from typing import Optional, List
 from fastapi import Body, Depends
@@ -38,7 +46,6 @@ from fastapi import Body, Depends
 
 
 
-import os
 
 if __name__ == "__main__":
     import uvicorn
@@ -77,7 +84,11 @@ def get_collection():
 
 
 
+
+
 load_dotenv()  # This loads variables from .env
+
+
 
 
 Base.metadata.create_all(bind=engine)
@@ -88,7 +99,6 @@ GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY")
 chroma_client = chromadb.Client(Settings(persist_directory="./chroma_db"))
 collection = chroma_client.get_or_create_collection("documents")
 
-from fastapi import FastAPI
 
 app = FastAPI()
 
@@ -116,7 +126,10 @@ def get_sentiment_analyzer():
 
 
 
+
 Base.metadata.create_all(bind=engine)
+
+
 
 import re
 
@@ -151,13 +164,21 @@ def build_citations(supporting_chunks, db):
                 "url": url
             })
             seen[key] = number
-    return citations, seen  # seen is a dict: (doc_id, chunk_index) -> number
+    return citations, seen 
+
+
+
+
+
 
 
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 UPLOAD_DIR = os.path.normpath(os.path.join(BASE_DIR, '../../data/uploaded_files'))
 os.makedirs(UPLOAD_DIR, exist_ok=True)
+
+
+
 
 
 
@@ -172,6 +193,8 @@ def get_embedder():
 
 
 
+
+
 chroma_client = None
 collection = None
 
@@ -183,6 +206,9 @@ def get_collection():
         chroma_client = chromadb.Client(Settings(persist_directory="./chroma_db"))
         collection = chroma_client.get_or_create_collection("documents")
     return collection
+
+
+
 
 
 
@@ -207,12 +233,11 @@ def get_db():
         db.close()
 
 def process_themes_and_citations(themes, db):
-    # Step 1: Collect all citations from themes 1–4
     citation_refs = []
     for theme in themes[:4]:
         matches = re.findall(r'\(Doc (\d+), Paragraph (\d+)\)', theme['theme_summary'])
         for doc_id, para in matches:
-            citation_refs.append((int(doc_id), int(para)-1))  # chunk_index is zero-based
+            citation_refs.append((int(doc_id), int(para)-1))
 
     # Deduplicate, preserve order
     unique_citations = []
@@ -225,7 +250,8 @@ def process_themes_and_citations(themes, db):
     # Build citation map
     citation_map = {ref: idx+1 for idx, ref in enumerate(unique_citations)}
 
-    # Step 2: Replace inline citations in themes 1–4
+
+
     new_themes = []
     for i, theme in enumerate(themes[:4]):
         text = theme['theme_summary']
@@ -241,7 +267,9 @@ def process_themes_and_citations(themes, db):
             "theme_summary": text
         })
 
-    # Step 3: Build the citation theme (Theme 5)
+
+
+    # Build the citation theme (Theme 5)
     citation_lines = []
     for idx, (doc_id, chunk_index) in enumerate(unique_citations, 1):
         doc = db.query(Document).filter(Document.id == doc_id).first()
@@ -253,9 +281,16 @@ def process_themes_and_citations(themes, db):
         "theme_summary": "Citations\n" + "\n".join(citation_lines)
     }
 
+
+
     # Combine themes 1–4 and Theme 5
     final_themes = new_themes + [theme5]
     return final_themes
+
+
+
+
+
 
 
 # --- Paragraph Chunking ---
@@ -263,6 +298,9 @@ def paragraph_chunk(text):
     # Split on double newlines for paragraphs
     paras = [p.strip() for p in text.split('\n\n') if p.strip()]
     return paras
+
+
+
 
 
 
@@ -384,7 +422,7 @@ async def upload_files(files: List[UploadFile] = File(...), db: Session = Depend
 
 
 
-
+# List and Get Documents
 @app.get("/documents/")
 def list_documents(db: Session = Depends(get_db)):
     docs = db.query(Document).all()
@@ -421,7 +459,7 @@ def list_documents(db: Session = Depends(get_db)):
 
 
 
-
+# Get Document by ID
 @app.get("/documents/{doc_id}")
 def get_document(doc_id: int, db: Session = Depends(get_db)):
     doc = db.query(Document).filter(Document.id == doc_id).first()
@@ -464,7 +502,7 @@ def get_document(doc_id: int, db: Session = Depends(get_db)):
 
 
 
-
+# Delete Document
 @app.delete("/documents/{doc_id}")
 def delete_document(doc_id: int, db: Session = Depends(get_db)):
     doc = db.query(Document).filter(Document.id == doc_id).first()
@@ -500,7 +538,7 @@ def delete_document(doc_id: int, db: Session = Depends(get_db)):
 
 
 
-
+# Download Document
 @app.get("/documents/{doc_id}/download")
 def download_document(doc_id: int, db: Session = Depends(get_db)):
     doc = db.query(Document).filter(Document.id == doc_id).first()
@@ -558,8 +596,7 @@ def synthesize_theme_summary(chunks, question):
 
 
 
-
-
+# Query Documents
 @app.post("/query/")
 def query_documents(
     question: str = Body(..., embed=True),
@@ -654,7 +691,7 @@ def query_documents(
 
 
 
-
+# Health Check Endpoint
 app = FastAPI()
 
 @app.get("/")
