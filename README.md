@@ -4,9 +4,9 @@ Sheep Bot is a friendly, sheep-themed chatbot that helps users interact with and
 
 ---
 
-## 🌐 Live Demo & API
+## 🌐 Demo & API = Currently Live Service is down because of server issued
 
-- 🔗 Live Website: [Sheep Bot Web App](https://wasserstoff-aiinterntask.vercel.app/)
+- 🔗 Website: [Sheep Bot Web App](https://wasserstoff-aiinterntask.vercel.app/)
 - ⚙️ API Docs (Swagger): [Sheep Bot API](https://mahindra-bot.biup.ai/docs#/)
 
 ---
